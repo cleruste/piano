@@ -1,0 +1,841 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f5fa">
+  <meta name="description" content="A piano-stand workspace for sight-reading, reharmonization and annotated scores.">
+  <title>Practice Room — Piano Harmony Studio</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/abcjs@6.7.3/abcjs-audio.css">
+  <script src="https://cdn.jsdelivr.net/npm/abcjs@6.7.3/dist/abcjs-basic-min.js" defer></script>
+  <style>
+    :root{color-scheme:light;--ink:#1e2038;--muted:#555a73;--surface:#fff;--bg:#f5f5fa;--line:#e2e2ee;--accent:#5444b5;--accent-dark:#433296;--tint:#eeebfc;--radius:18px;--shadow:0 4px 18px #28204a08;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;font-synthesis:none}
+    *,*::before,*::after{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);line-height:1.5}button,input,textarea{font:inherit}button,input,textarea,summary{touch-action:manipulation}button,summary{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.55}button:focus-visible,input:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid #7967dc;outline-offset:3px}button{color:inherit}a{color:var(--accent-dark)}[hidden]{display:none!important}h1,h2,h3,p{margin:0}svg.icon{width:19px;height:19px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.symbols{position:absolute;width:0;height:0;overflow:hidden}
+    .frame{width:min(1400px,100%);margin-inline:auto;padding-inline:clamp(16px,3.4vw,52px)}.topbar{background:var(--surface);border-bottom:1px solid var(--line)}.topbar .frame{min-height:72px;display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:10px}.brand{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:-.025em}.brand-mark{display:grid;place-items:center;background:var(--accent);color:#fff;width:38px;height:38px;border-radius:11px}.brand-mark .icon{width:22px;height:22px}.brand small{display:block;text-transform:uppercase;color:var(--muted);font-size:.64rem;letter-spacing:.13em;font-weight:750}.top-actions,.row{display:flex;align-items:center;flex-wrap:wrap;gap:9px}.btn{border:1px solid var(--line);border-radius:10px;background:#fff;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:8px 13px;font-weight:700;font-size:.88rem;text-align:center}.btn:not(:disabled):hover{background:#f7f5ff;border-color:#c6bde9}.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}.btn.primary:not(:disabled):hover{background:var(--accent-dark);border-color:var(--accent-dark)}.btn.soft{background:var(--tint);border-color:#ded7fa;color:var(--accent-dark)}.btn.full{width:100%}
+    .intro{padding-block:32px 24px;display:flex;align-items:end;justify-content:space-between;gap:16px}.eyebrow{display:flex;align-items:center;gap:8px;color:var(--accent-dark);text-transform:uppercase;font-size:.71rem;letter-spacing:.14em;font-weight:800}.eyebrow .icon{width:16px;height:16px}h1{font-family:Georgia,serif;line-height:1.12;font-size:clamp(2rem,4.5vw,3.15rem);font-weight:500;letter-spacing:-.045em;margin-block:7px 8px}.sub{color:var(--muted);font-size:.95rem}.pill{display:inline-flex;align-items:center;gap:7px;background:var(--tint);color:var(--accent-dark);border-radius:99px;padding:5px 10px;white-space:nowrap;font-size:.73rem;font-weight:800}.dot{width:7px;height:7px;border-radius:50%;background:currentColor}.layout{display:grid;grid-template-columns:minmax(260px,310px) minmax(0,1fr);gap:22px;align-items:start}.stack{display:grid;gap:18px;min-width:0}.panel{min-width:0;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}.pad{padding:clamp(16px,2vw,24px)}.section-title{display:flex;align-items:center;gap:10px;font-size:1.1rem;font-weight:800;letter-spacing:-.02em}.section-title .icon{color:var(--accent)}.small{font-size:.83rem;color:var(--muted)}.compose .small{margin-block:4px 15px}.field{display:grid;gap:6px;font-size:.85rem;font-weight:750;min-width:0}.field input,.field textarea{width:100%;border:1px solid #d9d9e9;border-radius:10px;background:#fbfbfe;padding:10px 12px;color:var(--ink);font-size:1rem;font-weight:450;min-height:44px}.field textarea{resize:vertical;min-height:76px}.field input::placeholder,.field textarea::placeholder{color:#656a81;opacity:1}.compose .primary,.follow .primary{margin-top:10px}.directions{display:grid;gap:7px;margin-block:12px 0}.direction{text-align:left;justify-content:space-between;line-height:1.35;background:#fafafe;font-size:.82rem}.direction .icon{width:14px;height:14px;color:var(--accent)}.follow{border-top:1px solid var(--line);padding-top:15px;margin-top:16px}.mic{margin-top:10px;touch-action:none;user-select:none;-webkit-user-select:none;-webkit-touch-callout:none;min-height:48px}.mic[data-active="true"]{background:#fce5eb;border-color:#e9a8b7;color:#8c213c}.mic-target{margin-top:8px}.mic-target select{font:inherit;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:8px;padding:6px;min-height:44px}.status{min-height:1.4em;overflow-wrap:anywhere}.status:empty{min-height:0}.status.error{color:#9b2541}.compose .status,.follow .status{margin:8px 0 0}.work-status{margin-top:8px}
+    .score-head,.theory-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px}.score-head{padding:18px clamp(14px,2.2vw,24px)}.score-title{font-family:Georgia,serif;font-weight:500;font-size:clamp(1.5rem,3vw,2.05rem);letter-spacing:-.035em;line-height:1.15;margin-block:4px;overflow-wrap:anywhere}.transport{display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:10px clamp(14px,2.2vw,24px);background:#faf9fe;border-block:1px solid var(--line)}.transport .status{flex:1 1 100%;margin:0}.tempo{display:flex;min-height:44px;align-items:center;gap:9px;margin-inline-start:auto;font-size:.82rem;color:var(--muted);font-weight:750}.tempo input{width:clamp(82px,14vw,155px);accent-color:var(--accent);margin:0;min-height:44px}.tempo output{min-width:4.4em;color:var(--accent-dark);font-variant-numeric:tabular-nums}.paper{padding:12px clamp(8px,1.6vw,22px) 15px;background:#fff;border-radius:0 0 var(--radius) var(--radius);color:#161424}.notation{width:100%;min-width:0;min-height:104px}.notation svg{display:block}.score-note{padding:4px 8px}.score-empty{padding:15px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:.9rem}.theory-head{margin-bottom:13px}.switch{display:inline-flex;gap:7px;align-items:center;min-height:44px;color:var(--accent-dark);font-size:.83rem;font-weight:750;cursor:pointer}.switch input{width:19px;height:19px;accent-color:var(--accent);margin:0}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(215px,100%),1fr));gap:10px}.theory-card,.variant{border:1px solid var(--line);border-radius:12px;background:#fafafe;padding:13px;overflow-wrap:anywhere}.theory-card h3,.variant h3{margin-block:6px 3px;font-size:1rem}.theory-card p,.variant p{color:var(--muted);font-size:.88rem}.variant .row{margin-top:10px}.variant .notation{padding-top:9px}.variant .pill{white-space:normal}.history{margin-top:2px}.history summary{display:flex;align-items:center;gap:9px;min-height:44px;font-weight:750;color:var(--accent-dark)}.history ol{margin:0;padding-left:23px;overflow-wrap:anywhere}.history li{padding:4px 0;color:var(--muted)}.history li strong{color:var(--ink)}.footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-block:20px 30px;color:var(--muted);font-size:.78rem}
+    dialog{width:min(560px,calc(100% - 28px));max-height:calc(100% - 28px);border:1px solid var(--line);border-radius:var(--radius);color:var(--ink);padding:22px;box-shadow:0 18px 80px #20174444}dialog::backdrop{background:#19132c8a}dialog form{display:grid;gap:12px}dialog h2{font-size:1.3rem}dialog .settings-head{display:flex;justify-content:space-between;align-items:center;gap:10px}dialog .cloud-setup{border:1px solid var(--line);border-radius:10px;padding:0 10px 5px}dialog summary{padding-block:10px}dialog pre{overflow:auto;background:var(--bg);padding:9px;border-radius:6px;font-size:.72rem}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+    .mobile-jump{display:none;text-decoration:none;margin-top:12px}.theory-card .pill{white-space:normal}.project-feedback .status:not(:empty){margin-top:8px}.variant-notes{margin:8px 0 0;padding-left:18px;color:var(--muted);font-size:.83rem}.variant-notes li{padding:2px 0}.variant-notes strong{color:var(--ink)}
+    @media(max-width:760px){.layout{grid-template-columns:1fr}.workbench{grid-row:1}.rail{grid-row:2}.directions{grid-template-columns:repeat(2,minmax(0,1fr))}.intro{align-items:start}.intro>.pill{display:none}.mobile-jump{display:inline-flex}}
+    @media(max-width:470px){.branding-caption,.top-actions .icon{display:none}.topbar .frame{align-items:flex-start;flex-direction:column;gap:7px}.top-actions{width:100%;gap:6px}.top-actions .btn{flex:1;padding-inline:6px;white-space:nowrap;font-size:.78rem}.intro{padding-block:20px 16px}.layout,.stack{gap:13px}.score-head .pill{display:none}.tempo{margin-inline-start:0}.directions{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <svg class="symbols" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="i-piano" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 20V4m8 16V4m-4 16v-7M7 5v8h2V5m6 0v8h2V5"/></symbol>
+    <symbol id="i-settings" viewBox="0 0 24 24"><path d="M4 7h16M4 17h16M9 4v6m6 4v6"/></symbol>
+    <symbol id="i-download" viewBox="0 0 24 24"><path d="M12 3v12m-4-4 4 4 4-4M4 16v4h16v-4"/></symbol>
+    <symbol id="i-folder" viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Z"/></symbol>
+    <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 18V5l11-2v12M9 9l11-2"/><ellipse cx="6" cy="18" rx="3" ry="2"/><ellipse cx="17" cy="15" rx="3" ry="2"/></symbol>
+    <symbol id="i-spark" viewBox="0 0 24 24"><path d="M12 2l2.4 7.6L22 12l-7.6 2.4L12 22l-2.4-7.6L2 12l7.6-2.4L12 2Z"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M4 12h15m-6-6 6 6-6 6"/></symbol>
+    <symbol id="i-mic" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11v1a7 7 0 0 0 14 0v-1m-7 8v3m-3 0h6"/></symbol>
+    <symbol id="i-play" viewBox="0 0 24 24"><path d="m8 5 12 7-12 7z" fill="currentColor"/></symbol>
+    <symbol id="i-stop" viewBox="0 0 24 24"><rect x="6" y="6" width="12" height="12" rx="1" fill="currentColor"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24"><path d="M12 6c-2-2-6-2-9-1v14c3-1 7-1 9 1 2-2 6-2 9-1V5c-3-1-7-1-9 1Zm0 0v14"/></symbol>
+  </svg>
+  <header class="topbar">
+    <div class="frame">
+      <div class="brand"><span class="brand-mark"><svg class="icon" aria-hidden="true"><use href="#i-piano"/></svg></span><span>Practice Room<small class="branding-caption">Piano harmony studio</small></span></div>
+      <div class="top-actions">
+        <button class="btn" id="export" type="button"><svg class="icon" aria-hidden="true"><use href="#i-download"/></svg>Export Project <span class="sr-only">(.json)</span></button>
+        <button class="btn" id="load" type="button"><svg class="icon" aria-hidden="true"><use href="#i-folder"/></svg>Load Project</button>
+        <input id="project-file" type="file" accept=".json,application/json,text/plain" hidden>
+        <button class="btn soft" id="settings-open" type="button" aria-haspopup="dialog"><svg class="icon" aria-hidden="true"><use href="#i-settings"/></svg>Settings</button>
+      </div>
+    </div>
+  </header>
+  <main class="frame">
+    <div class="project-feedback"><p class="status small" id="project-status" role="status"></p></div>
+    <div class="intro">
+      <div><p class="eyebrow"><svg class="icon" aria-hidden="true"><use href="#i-music"/></svg>Your piano-stand workspace</p><h1>Play it. Change it. Understand it.</h1><p class="sub">Sketch a tune, try a new harmony, and see why it works.</p><a class="btn soft mobile-jump" href="#compose-title">Arrange a tune</a></div>
+      <span class="pill"><span class="dot"></span>Grade 6/7 sight-reading</span>
+    </div>
+    <div class="layout">
+      <aside class="stack rail" aria-label="Arrangement controls">
+        <section class="panel pad compose" aria-labelledby="compose-title">
+          <h2 class="section-title" id="compose-title"><svg class="icon" aria-hidden="true"><use href="#i-music"/></svg>Start with a tune</h2>
+          <p class="small">Name a song, describe a passage, or enter a few notes and chords.</p>
+          <form id="song-form">
+            <label class="field" for="song">Song or phrase
+              <textarea id="song" maxlength="2500" rows="3" placeholder="e.g. Rhapsody in Blue — Andantino slow theme in E major"></textarea>
+            </label>
+            <button class="btn primary full request" type="submit"><svg class="icon" aria-hidden="true"><use href="#i-spark"/></svg>Generate Score</button>
+          </form>
+          <div class="follow" aria-labelledby="directions-title">
+            <h2 class="section-title" id="directions-title"><svg class="icon" aria-hidden="true"><use href="#i-spark"/></svg>Try a direction</h2>
+            <div class="directions" id="directions"></div>
+          </div>
+          <form class="follow" id="edit-form">
+            <label class="field" for="edit">Custom follow-up
+              <textarea id="edit" maxlength="2500" rows="2" placeholder="Make bar 4 more dramatic and explain why."></textarea>
+            </label>
+            <button class="btn primary full request" type="submit">Apply Follow-up<svg class="icon" aria-hidden="true"><use href="#i-arrow"/></svg></button>
+          </form>
+          <p id="request-status" class="small status" role="status"></p>
+        </section>
+        <section class="panel pad" aria-labelledby="voice-title">
+          <h2 class="section-title" id="voice-title"><svg class="icon" aria-hidden="true"><use href="#i-mic"/></svg>Voice input</h2>
+          <label class="small mic-target row" for="voice-target">Dictate into <select id="voice-target"><option value="song">Song or phrase</option><option value="edit" selected>Custom follow-up</option></select></label>
+          <button class="btn soft full mic" id="mic" type="button" aria-pressed="false"><svg class="icon" aria-hidden="true"><use href="#i-mic"/></svg><span id="mic-label">Hold / Tap to Speak</span></button>
+          <p class="small status work-status" id="voice-status" role="status">Hold and release, or tap once to start and again to stop.</p>
+        </section>
+      </aside>
+      <div class="stack workbench">
+        <section class="panel" aria-labelledby="score-title">
+          <div class="score-head"><div><p class="eyebrow">Score desk</p><h2 class="score-title" id="score-title">Evening Turnaround</h2><p class="small" id="score-meta">Original study · C major · 8 bars</p></div><span class="pill">Grand staff</span></div>
+          <div class="transport" aria-label="Score playback">
+            <button class="btn primary" type="button" id="play" disabled><svg class="icon" aria-hidden="true"><use href="#i-play"/></svg>Play</button>
+            <button class="btn" type="button" id="stop" disabled><svg class="icon" aria-hidden="true"><use href="#i-stop"/></svg>Stop</button>
+            <label class="tempo" for="tempo">Tempo <input id="tempo" type="range" min="40" max="180" value="84" step="1"> <output id="tempo-value" for="tempo">84 BPM</output></label>
+            <p class="small status" id="audio-status" role="status"></p>
+          </div>
+          <div class="paper"><div id="notation" class="notation" aria-label="Piano sheet music"></div><p class="small status score-note" id="score-status" role="status"></p></div>
+        </section>
+        <section class="panel pad" aria-labelledby="theory-title">
+          <div class="theory-head"><div><p class="eyebrow">Learn from the score</p><h2 class="section-title" id="theory-title"><svg class="icon" aria-hidden="true"><use href="#i-book"/></svg>Harmony notes</h2></div><label class="switch" for="read-aloud"><input type="checkbox" id="read-aloud"> Read Explanation Aloud</label></div>
+          <div class="cards" id="changes"></div>
+          <p class="small status work-status" id="read-status" role="status"></p>
+        </section>
+        <section class="panel pad" id="alternatives-panel" aria-labelledby="alternatives-title" hidden>
+          <div class="theory-head"><div><p class="eyebrow">Compare voicings</p><h2 class="section-title" id="alternatives-title">Alternative reharmonizations</h2></div></div>
+          <div class="cards" id="alternatives"></div>
+        </section>
+        <details class="panel pad history"><summary>Project history</summary><ol id="history"></ol><p class="small" id="history-empty">Follow-up edits will appear here.</p></details>
+      </div>
+    </div>
+    <footer class="footer"><span>Practice Room · Made for the music stand</span><span>Projects stay in this browser unless exported or backed up.</span></footer>
+  </main>
+  <dialog id="settings" aria-labelledby="settings-title">
+    <form id="settings-form">
+      <div class="settings-head"><h2 id="settings-title">Settings</h2><button class="btn" id="settings-close" type="button" aria-label="Close settings">Close</button></div>
+      <label class="field" for="api-key">OpenRouter API Key <input id="api-key" type="password" placeholder="sk-or-…" autocomplete="off" autocapitalize="none" spellcheck="false"></label>
+      <p class="small">Use your own key, preferably with a spending limit. It’s stored unencrypted in this browser and never included in project files. On shared devices, clear it before leaving.</p>
+      <label class="field" for="model">OpenRouter Model <input id="model" type="text" placeholder="anthropic/claude-sonnet-4.6" autocapitalize="none" spellcheck="false" maxlength="200"></label>
+      <label class="field" for="firebase-config">Firebase firebaseConfig (optional)<textarea id="firebase-config" rows="3" spellcheck="false" autocapitalize="none" placeholder='{ "apiKey": "…", "authDomain": "…", "projectId": "…", "appId": "…" }'></textarea></label>
+      <details class="cloud-setup"><summary class="small">Optional Firebase backup setup</summary><p class="small">Enable Anonymous Authentication and Cloud Firestore in your Firebase project. Add this site to authorized domains if required. Use owner-only Firestore rules, for example:</p><pre>rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /practiceRoomBackups/{uid} {
+      allow read, write: if request.auth != null
+                         &amp;&amp; request.auth.uid == uid;
+    }
+  }
+}</pre><p class="small">The backup belongs to this browser’s anonymous account. Use JSON files to move projects between devices.</p></details>
+      <div class="row"><button class="btn primary" type="submit">Save Settings</button><button class="btn cloud" type="button" id="cloud-save" hidden>Back Up to Firebase</button><button class="btn cloud" type="button" id="cloud-load" hidden>Restore Backup</button></div>
+      <p class="status small" id="settings-status" role="status"></p>
+    </form>
+  </dialog>
+  <noscript>Practice Room needs JavaScript to render scores and read project files.</noscript>
+  <script>
+    'use strict';
+    const $ = id => document.getElementById(id);
+    const DEFAULT_MODEL = 'anthropic/claude-sonnet-4.6';
+    const SETTINGS_KEY = 'practice-room.settings.v1';
+    const PROJECT_KEY = 'practice-room.project.v1';
+    const MAX_FILE_BYTES = 1024 * 1024;
+    const API = 'https://openrouter.ai/api/v1';
+    const DIRECTIONS = [
+      'Jazzify with ii-V-I turnarounds', 'Offer 2 alternative reharmonizations',
+      'Tritone substitutions & chromatic bass', 'Borrowed minor chords for drama',
+      'Simplify for Grade 6/7 sight-reading'
+    ];
+    const DEMO = {
+      title: 'Evening Turnaround',
+      current_abc: `X:1
+T:Evening Turnaround
+M:4/4
+L:1/8
+Q:1/4=84
+%%score { RH LH }
+V:RH clef=treble
+V:LH clef=bass
+K:C
+[V:RH] "Cmaj7" E2 G2 c2 B2 | "A7" A2 ^c2 e2 G2 | "Dm7" F2 A2 c2 A2 | "G7" G2 F2 D2 B,2 |
+w: Imaj7 * * * | V7/ii * * * | ii7 * * * | V7 * * * |
+[V:LH] C,4 [E,G,B,]4 | A,,4 [G,^C]4 | D,4 [F,C]4 | G,,4 [F,B,]4 |
+[V:RH] "Cmaj7/E" E2 G2 c2 B2 | "Fm6" _A2 c2 d2 c2 | "G7" B2 A2 F2 D2 | "Cmaj7" E2 D2 C4 |]
+w: I6 * * * | iv(add6) * * * | V7 * * * | Imaj7 * * |
+[V:LH] E,4 [G,B,C]4 | F,4 [_A,D]4 | G,,4 [F,B,]4 | C,4 [E,G,B,]4 |]
+`,
+      changes: [
+        {measure:'2 → 3', chord:'A7 → Dm7', technique:'Secondary dominant', explanation:'A7 borrows C-sharp to point toward D minor. Listen for C-sharp rising to D across the hands; you can use the same idea to lead into another chord.'},
+        {measure:'3 → 5', chord:'Dm7 → G7 → Cmaj7/E', technique:'ii–V–I cadence', explanation:'The bass moves D to G before the harmony returns to C. Landing on E in the bass softens that return and keeps the phrase moving.'},
+        {measure:'6', chord:'Fm6', technique:'Borrowed minor', explanation:'Borrow the minor iv from C minor. The A-flat colors the familiar F harmony, and D adds a sweet sixth above the F bass.'},
+        {measure:'7 → 8', chord:'G7 → Cmaj7', technique:'Guide-tone resolution', explanation:'G7’s F falls to E and its B can stay as the major seventh of C. Play just those two notes first to hear the voice leading.'}
+      ], alternatives: [], history: [], song: '', tempo: 84
+    };
+    const SYSTEM_PROMPT = `You are a piano arranger and practical music-theory tutor. Return exactly one strict JSON object, no Markdown or code fences:
+{"title":"…","abc":"…","changes":[{"measure":"2–3","chord":"A7 → Dm7","technique":"Secondary dominant","explanation":"…"}],"alternatives":[{"title":"…","abc":"…","changes":[{"measure":"…","chord":"…","technique":"…","explanation":"…"}]}]}
+Make a short playable piano approximation/study (normally 4 to 8 measures), not a claimed authoritative transcription. For an edit, keep the existing melody, key, rhythm, and bar numbering unless told otherwise. If asked for two alternatives, keep the base arrangement as the main score and return exactly two complete, distinct, playable arrangements of the same passage in alternatives, each with its own theory notes. Otherwise return alternatives: [] unless requested.
+Target Grade 6/7 sight-reading: melody in the right hand, simple bass and compact shell voicings in the left, no stretches wider than an octave, and manageable rhythms. For each arrangement produce one valid ABC tune: headers X:, T:, M:, L:, Q: (quarter-note tempo), %%score { RH LH }, V:RH clef=treble, V:LH clef=bass, then K:. Use [V:RH] and [V:LH] blocks of the same bar count and exact durations. Put quoted chord symbols on the right-hand notes. Immediately after each RH music line place a w: line with concise Roman-numeral harmony labels aligned to the first note of each chord; use * for remaining note slots and | to advance to the next bar. Use 2 to 4 bars per music line. Check duration, octave/register, accidentals and chord-tone spelling. Avoid any directives other than %%score. In changes, identify actual measures and chords and explain where the notes move and what to listen for or try, in one or two short sentences per change.`;
+
+    function stored(key) {
+      try { return JSON.parse(localStorage.getItem(key)); } catch { return null; }
+    }
+    function persist(key, value) {
+      try { localStorage.setItem(key, JSON.stringify(value)); return true; } catch { return false; }
+    }
+    function status(id, text = '', error = false) {
+      const el = $(id);
+      el.textContent = text;
+      el.classList.toggle('error', error);
+    }
+    function element(tag, className, text) {
+      const el = document.createElement(tag);
+      if (className) el.className = className;
+      if (text !== undefined) el.textContent = text;
+      return el;
+    }
+    function text(value, field, max) {
+      if (typeof value !== 'string' || !value.trim() || value.length > max) throw new Error(`Missing or invalid ${field}.`);
+      return value.trim();
+    }
+    function cleanChanges(changes) {
+      if (!Array.isArray(changes) || changes.length > 40) throw new Error('Invalid harmony notes.');
+      return changes.map(c => ({
+        measure: text(typeof c?.measure === 'number' ? String(c.measure) : c?.measure, 'measure', 80),
+        chord: text(c?.chord, 'chord', 120), technique: text(c?.technique, 'technique', 150),
+        explanation: text(c?.explanation, 'explanation', 1300)
+      }));
+    }
+    function arrangement(data, abc = data?.abc) {
+      const clean = text(abc, 'ABC notation', 24000).replace(/\r\n?/g, '\n');
+      if ((clean.match(/^X:/gm) || []).length !== 1 || !/^K:/m.test(clean) ||
+          !/^V:RH\s+[^\n]*\bclef=treble\b/m.test(clean) || !/^V:LH\s+[^\n]*\bclef=bass\b/m.test(clean)) {
+        throw new Error('The score must contain one ABC tune with RH treble and LH bass voices.');
+      }
+      return {title: text(data?.title, 'title', 180), abc: clean, changes: cleanChanges(data?.changes)};
+    }
+    // Only the grand-staff grouping directive is needed; imported or generated ABC is untrusted text.
+    function renderableABC(abc) {
+      return abc.split('\n').filter(line => !/^\s*(?:%%|I:)/.test(line) || /^%%(?:score|staves)\s+\{\s*\(?RH\)?\s+\(?LH\)?\s*\}\s*$/.test(line)).join('\n');
+    }
+    function verifyScore(abc) {
+      if (!window.ABCJS) return;
+      const [tune] = ABCJS.parseOnly(renderableABC(abc));
+      const hasNotes = clef => tune?.lines.some(line => line.staff?.some(staff =>
+        staff.clef?.type === clef && staff.voices.some(part => part.some(note => note.el_type === 'note' && note.pitches?.length))));
+      if (!hasNotes('treble') || !hasNotes('bass')) throw new Error('The ABC score needs playable notes on both staves.');
+    }
+    function cleanAlternatives(list) {
+      if (!Array.isArray(list) || list.length > 8) throw new Error('Invalid alternative arrangements.');
+      return list.map(item => arrangement(item));
+    }
+    function projectData(data) {
+      const base = arrangement(data, data?.current_abc);
+      const history = data?.history ?? [];
+      if (!Array.isArray(history) || history.length > 100) throw new Error('Invalid project history.');
+      return {
+        title: base.title, current_abc: base.abc, changes: base.changes,
+        alternatives: cleanAlternatives(data?.alternatives ?? []),
+        history: history.map(row => ({prompt: text(row?.prompt, 'history prompt', 2500), summary: text(row?.summary, 'history summary', 400)})),
+        song: typeof data.song === 'string' ? data.song.slice(0, 2500) : '',
+        tempo: Number.isInteger(data.tempo) && data.tempo >= 40 && data.tempo <= 180 ? data.tempo : scoreTempo(base.abc)
+      };
+    }
+    function scoreTempo(abc) {
+      const match = abc.match(/^Q:\s*(?:"[^"]+"\s*)?(?:(\d+)\/(\d+)\s*=\s*)?(\d+)/m);
+      const bpm = match ? +match[3] * (match[2] ? 4 * +match[1] / +match[2] : 1) : 84;
+      return Number.isFinite(bpm) ? Math.max(40, Math.min(180, Math.round(bpm))) : 84;
+    }
+    const saved = stored(SETTINGS_KEY);
+    let config = {
+      key: typeof saved?.key === 'string' ? saved.key : '',
+      model: typeof saved?.model === 'string' && saved.model ? saved.model : DEFAULT_MODEL,
+      firebase: saved?.firebase && typeof saved.firebase === 'object' ? saved.firebase : null
+    };
+    let project = DEMO;
+    let example = true;
+    const savedProject = stored(PROJECT_KEY);
+    if (savedProject) {
+      try { project = projectData(savedProject); example = project.current_abc.trim() === DEMO.current_abc.trim(); }
+      catch { status('project-status', 'The saved project could not be read. Showing the built-in study.', true); }
+    }
+    let visual = null;
+    let synth = null;
+    let audioContext = null;
+    let audioRun = 0;
+    let hotRequest = false;
+    let cloudBusy = false;
+    let renderWidth = 0;
+    let utterance = null;
+    let cloudConnection = null;
+
+    function saveProject() {
+      if (!persist(PROJECT_KEY, project)) status('project-status', 'Browser storage is unavailable or full. Export the project to keep a copy.', true);
+    }
+    function notationOptions(width) {
+      // A smaller staff width lets abcjs reflow the systems instead of shrinking an entire desktop line.
+      const staffwidth = Math.max(248, Math.floor(width) - 8);
+      return {responsive:'resize', staffwidth, wrap:{minSpacing:1.55, maxSpacing:2.6, preferredMeasuresPerLine:width < 500 ? 2 : 4},
+        paddingtop:7, paddingbottom:5, paddingleft:5, paddingright:5, selectTypes:false, visualTranspose:0, add_classes:true};
+    }
+    function drawNotation(node, abc) {
+      return ABCJS.renderAbc(node, renderableABC(abc), notationOptions(node.clientWidth || 320))[0];
+    }
+    function paintScore() {
+      const node = $('notation');
+      renderWidth = node.clientWidth;
+      visual = null;
+      try {
+        if (!window.ABCJS) throw new Error('The notation library did not load. Check your connection and reload.');
+        visual = drawNotation(node, project.current_abc);
+        if (!visual || !node.querySelector('svg')) throw new Error('This score could not be rendered.');
+        const warnings = visual.warnings?.length || 0;
+        status('score-status', warnings ? `ABC contains ${warnings} notation ${warnings === 1 ? 'warning' : 'warnings'}. Check the score before practicing.` : '', warnings > 0);
+      } catch (error) {
+        node.replaceChildren(element('pre', 'score-empty', project.current_abc));
+        status('score-status', error.message, true);
+      }
+      $('play').disabled = !visual || Boolean(synth);
+    }
+    function paintChanges() {
+      const list = project.changes.map(change => {
+        const card = element('article', 'theory-card');
+        card.append(element('span', 'pill', `Bar ${change.measure} · ${change.chord}`), element('h3', '', change.technique), element('p', '', change.explanation));
+        return card;
+      });
+      $('changes').replaceChildren(...(list.length ? list : [element('p', 'small', 'This arrangement has no harmony notes yet.')]));
+      $('read-aloud').disabled = !list.length || !('speechSynthesis' in window);
+      if ($('read-aloud').disabled) { $('read-aloud').checked = false; stopSpeech(); }
+    }
+    function paintAlternatives() {
+      $('alternatives-panel').hidden = !project.alternatives.length;
+      $('alternatives').replaceChildren(...project.alternatives.map((alt, i) => {
+        const card = element('article', 'variant');
+        const actions = element('div', 'row');
+        const preview = element('button', 'btn', 'Preview score');
+        const load = element('button', 'btn soft project-mutation', 'Load into main score');
+        const previewPane = element('div', 'notation');
+        previewPane.id = `preview-${i}`;
+        previewPane.hidden = true;
+        preview.setAttribute('aria-expanded', 'false');
+        preview.setAttribute('aria-controls', previewPane.id);
+        preview.addEventListener('click', () => {
+          previewPane.hidden = !previewPane.hidden;
+          preview.setAttribute('aria-expanded', String(!previewPane.hidden));
+          preview.textContent = previewPane.hidden ? 'Preview score' : 'Hide preview';
+          if (!previewPane.hidden) drawPreview(previewPane, alt.abc);
+        });
+        load.disabled = hotRequest || cloudBusy;
+        load.addEventListener('click', () => {
+          const alternatives = [...project.alternatives];
+          alternatives[i] = {title:project.title, abc:project.current_abc, changes:project.changes};
+          commit({ ...project, title:alt.title, current_abc:alt.abc, changes:alt.changes, alternatives, tempo:scoreTempo(alt.abc),
+            history:appendHistory(project.history, `Load alternative: ${alt.title}`, 'Swapped with the previous main arrangement.') });
+          status('project-status', `Loaded ${alt.title}. The previous score is now an alternative.`);
+          $('score-title').scrollIntoView({block:'start'});
+          $('score-title').focus({preventScroll:true});
+        });
+        actions.append(preview, load);
+        const techniques = [...new Set(alt.changes.map(change => change.technique))];
+        const notes = element('ul', 'variant-notes');
+        for (const change of alt.changes.slice(0, 4)) {
+          const item = element('li');
+          item.append(element('strong', '', `Bar ${change.measure} (${change.chord}): `), document.createTextNode(change.explanation));
+          notes.append(item);
+        }
+        card.append(element('span', 'pill', `Option ${i + 1}`), element('h3', '', alt.title),
+          element('p', '', techniques.join(' · ') || 'Alternate harmony'));
+        if (notes.childElementCount) card.append(notes);
+        card.append(actions, previewPane);
+        return card;
+      }));
+    }
+    function drawPreview(node, abc) {
+      try { if (!drawNotation(node, abc)) throw new Error(); }
+      catch { node.replaceChildren(element('p', 'small', 'Score preview unavailable.')); }
+    }
+    function paintHistory() {
+      $('history-empty').hidden = Boolean(project.history.length);
+      $('history').replaceChildren(...[...project.history].reverse().map(entry => {
+        const item = element('li');
+        item.append(element('strong', '', entry.prompt), document.createTextNode(` — ${entry.summary}`));
+        return item;
+      }));
+    }
+    function paintProject() {
+      $('score-title').textContent = project.title;
+      $('score-meta').textContent = example ? 'Original study · C major · 8 bars' : 'Piano arrangement · Chord symbols & harmonic labels';
+      $('song').value = project.song;
+      $('tempo').value = project.tempo;
+      paintTempo();
+      paintScore();
+      paintChanges();
+      paintAlternatives();
+      paintHistory();
+    }
+    function commit(next) {
+      stopAudio();
+      stopSpeech();
+      project = next;
+      example = next.current_abc.trim() === DEMO.current_abc.trim();
+      paintProject();
+      saveProject();
+      if ($('read-aloud').checked) readExplanation();
+    }
+    function appendHistory(history, prompt, summary) {
+      return [...history, {prompt, summary}].slice(-100);
+    }
+    function paintTempo() {
+      $('tempo-value').textContent = `${project.tempo} BPM`;
+      $('tempo').setAttribute('aria-valuetext', `${project.tempo} beats per minute`);
+    }
+    function stopAudio(message = '') {
+      audioRun++;
+      if (synth?.getIsRunning()) synth.stop();
+      synth = null;
+      $('play').disabled = !visual;
+      $('stop').disabled = true;
+      status('audio-status', message);
+    }
+    async function play() {
+      if (!visual || synth) return;
+      stopSpeech();
+      const run = ++audioRun;
+      const tune = visual;
+      const qpm = project.tempo;
+      try {
+        if (!ABCJS.synth.supportsAudio()) throw new Error('This browser does not support score playback.');
+        const Audio = window.AudioContext || window.webkitAudioContext;
+        audioContext ||= new Audio();
+        const resume = audioContext.resume();
+        const player = synth = new ABCJS.synth.CreateSynth();
+        $('play').disabled = true;
+        $('stop').disabled = false;
+        status('audio-status', 'Preparing piano audio…');
+        await resume;
+        if (run !== audioRun) return;
+        await player.init({audioContext, visualObj:tune, options:{qpm, chordsOff:true, onEnded:() => {
+          if (run === audioRun) stopAudio('Playback finished.');
+        }}});
+        if (run !== audioRun) return;
+        const buffer = await player.prime();
+        if (run !== audioRun) return;
+        if (buffer.status !== 'running' || !buffer.duration) throw new Error('Piano audio could not start. Check the connection and tap Play again.');
+        player.start();
+        status('audio-status', `Playing at ${qpm} BPM.`);
+      } catch (error) {
+        if (run !== audioRun) return;
+        stopAudio();
+        status('audio-status', error.message || 'Piano audio could not start.', true);
+      }
+    }
+    function stopSpeech() {
+      if (utterance) {
+        utterance = null;
+        speechSynthesis.cancel();
+      }
+      status('read-status');
+    }
+    function readExplanation() {
+      stopSpeech();
+      if (!$('read-aloud').checked || !project.changes.length) return;
+      if (synth) stopAudio();
+      const notes = project.changes;
+      function speak(index) {
+        if (index === notes.length) { utterance = null; status('read-status'); return; }
+        const c = notes[index];
+        const speech = utterance = new SpeechSynthesisUtterance(`Bar ${c.measure}. ${c.technique}. ${c.explanation}`);
+        speech.lang = 'en';
+        speech.rate = 0.92;
+        speech.onend = () => { if (utterance === speech) speak(index + 1); };
+        speech.onerror = () => { if (utterance === speech) { utterance = null; status('read-status', 'Readout unavailable. Toggle it off and on to retry.', true); } };
+        speechSynthesis.speak(speech);
+      }
+      status('read-status', 'Reading harmony notes aloud.');
+      speak(0);
+    }
+
+    function setBusy() {
+      const locked = hotRequest || cloudBusy;
+      for (const button of document.querySelectorAll('.request,.project-mutation,.cloud,#load')) button.disabled = locked;
+      $('song').readOnly = locked;
+      $('settings-status').setAttribute('aria-busy', String(cloudBusy));
+    }
+    function parseModelJSON(raw) {
+      const cleaned = raw.trim().replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '');
+      try { return JSON.parse(cleaned); }
+      catch {
+        const start = cleaned.indexOf('{');
+        const end = cleaned.lastIndexOf('}');
+        if (start >= 0 && end > start) return JSON.parse(cleaned.slice(start, end + 1));
+        throw new Error('The model did not return valid JSON.');
+      }
+    }
+    async function router(path, body, key, timeout) {
+      const controller = new AbortController();
+      const timer = setTimeout(() => controller.abort(), timeout);
+      const headers = {Authorization:`Bearer ${key}`, 'Content-Type':'application/json', 'X-OpenRouter-Title':'Practice Room'};
+      if (location.origin && location.origin !== 'null') headers['HTTP-Referer'] = location.href;
+      try {
+        const response = await fetch(`${API}${path}`, {
+          method:'POST', headers, body:JSON.stringify(body), signal:controller.signal
+        });
+        const result = await response.json().catch(() => null);
+        if (!response.ok || result?.error) {
+          const detail = result?.error?.message;
+          throw new Error(`OpenRouter (${response.status}): ${typeof detail === 'string' ? detail.replaceAll(key, '[key]').slice(0, 280) : 'Request failed.'}`);
+        }
+        if (!result) throw new Error('OpenRouter returned an unreadable response.');
+        return result;
+      } catch (error) {
+        if (controller.signal.aborted) throw new Error('OpenRouter timed out. Please try again.');
+        if (error instanceof TypeError) throw new Error('Could not reach OpenRouter. Check your connection and try again.');
+        throw error;
+      } finally { clearTimeout(timer); }
+    }
+    async function arrange(mode, direction = '') {
+      if (hotRequest || cloudBusy) return;
+      const song = $('song').value.trim();
+      const isNew = mode === 'new' || (mode === 'direction' && !!song && song !== project.song);
+      if (isNew && !song) { status('request-status', 'Enter a song, phrase, or melody first.', true); $('song').focus(); return; }
+      if (!isNew && !direction) { status('request-status', 'Enter a follow-up instruction first.', true); $('edit').focus(); return; }
+      const {key, model} = config;
+      if (!key) { showSettings('Add your OpenRouter API key to generate or edit a score.'); return; }
+      const base = project;
+      hotRequest = true;
+      setBusy();
+      status('request-status', isNew ? 'Arranging your piano score…' : 'Working through the harmony…');
+      try {
+        const user = isNew ? {song, instruction:direction || 'Create the initial score.'} : {
+          song:base.song || base.title, instruction:direction,
+          current:{title:base.title, abc:base.current_abc, changes:base.changes}, history:base.history.slice(-8)
+        };
+        const response = await router('/chat/completions', {
+          model, response_format:{type:'json_object'},
+          messages:[{role:'system', content:SYSTEM_PROMPT}, {role:'user', content:JSON.stringify(user)}]
+        }, key, 120000);
+        const choice = response.choices?.[0];
+        if (choice?.finish_reason === 'length') throw new Error('The response was cut short. Ask for fewer bars and retry.');
+        if (typeof choice?.message?.content !== 'string') throw new Error('The model returned no arrangement. Try a different model or prompt.');
+        let data;
+        try { data = parseModelJSON(choice.message.content); } catch { throw new Error('The model did not return valid JSON. Try again or select a model that supports JSON mode.'); }
+        const score = arrangement(data);
+        const options = cleanAlternatives(data?.alternatives ?? []);
+        if (direction === DIRECTIONS[1] && options.length !== 2) throw new Error('The model did not return two alternatives. Try the direction again.');
+        verifyScore(score.abc);
+        for (const option of options) verifyScore(option.abc);
+        // When comparing an existing tune, keep its original score regardless of model drift.
+        const keepBase = !isNew && options.length > 0;
+        const next = keepBase ? base : {title:score.title, current_abc:score.abc, changes:score.changes, song:isNew ? song : base.song, tempo:isNew ? scoreTempo(score.abc) : project.tempo};
+        const summary = options.length ? `${options.length} alternative arrangements for ${next.title}` : `Updated score: ${next.title}`;
+        const prompt = (isNew ? `${song}${direction ? ` — ${direction}` : ''}` : direction).slice(0, 2500);
+        commit({...next, alternatives:options, history:appendHistory(isNew ? [] : base.history, prompt, summary)});
+        if (mode === 'edit' && $('edit').value.trim() === direction) $('edit').value = '';
+        status('request-status', options.length ? 'Alternative scores are ready to compare.' : 'Score and harmony notes are ready.');
+        $('score-title').scrollIntoView({block:'start'});
+      } catch (error) { status('request-status', error.message || 'Could not arrange the score.', true); }
+      finally { hotRequest = false; setBusy(); }
+    }
+
+    function showSettings(message = '') {
+      $('api-key').value = config.key;
+      $('model').value = config.model;
+      $('firebase-config').value = config.firebase ? JSON.stringify(config.firebase, null, 2) : '';
+      for (const button of document.querySelectorAll('.cloud')) button.hidden = !config.firebase;
+      status('settings-status', message);
+      if (!$('settings').open) $('settings').showModal();
+    }
+    async function parseFirebase(value) {
+      if (!value) return null;
+      if (value.length > 12000) throw new Error('Firebase config is too large. Paste only the web app config object.');
+      const source = value.replace(/^(?:(?:const|let|var)\s+)?firebaseConfig\s*=\s*/, '').replace(/;\s*$/, '');
+      let data;
+      try { data = JSON.parse(source); }
+      catch {
+        try { const {default:JSON5} = await import('https://cdn.jsdelivr.net/npm/json5@2.2.3/dist/index.mjs'); data = JSON5.parse(source); }
+        catch { throw new Error('Paste the Firebase web app config as JSON or a JavaScript object literal.'); }
+      }
+      const fields = ['apiKey','authDomain','projectId','appId','databaseURL','storageBucket','messagingSenderId','measurementId'];
+      if (!data || !['apiKey','authDomain','projectId','appId'].every(k => typeof data[k] === 'string' && data[k].trim())) {
+        throw new Error('Firebase config needs apiKey, authDomain, projectId, and appId.');
+      }
+      return Object.fromEntries(fields.filter(k => typeof data[k] === 'string').map(k => [k,data[k].trim()]));
+    }
+    async function saveSettings(event) {
+      event.preventDefault();
+      if (cloudBusy) return;
+      const key = $('api-key').value.trim();
+      const model = $('model').value.trim() || DEFAULT_MODEL;
+      if (key && !/^sk-or-\S+$/.test(key)) { status('settings-status', 'An OpenRouter key starts with sk-or-.', true); return; }
+      if (!/^\S+\/\S+$/.test(model)) { status('settings-status', 'Use an OpenRouter provider/model ID.', true); return; }
+      const submit = event.submitter || $('settings-form').querySelector('[type="submit"]');
+      submit.disabled = true;
+      try {
+        const firebase = await parseFirebase($('firebase-config').value.trim());
+        config = {key, model, firebase};
+        const savedOK = persist(SETTINGS_KEY, config);
+        showSettings(savedOK ? 'Settings saved in this browser.' : 'Storage is unavailable. Settings will last until this page closes.');
+      } catch (error) { status('settings-status', error.message, true); }
+      finally { submit.disabled = false; }
+    }
+    async function cloud() {
+      const firebase = config.firebase;
+      const signature = JSON.stringify(firebase);
+      if (cloudConnection?.signature === signature) return cloudConnection;
+      const gstatic = 'https://www.gstatic.com/firebasejs/12.10.0';
+      const [appApi, authApi, dbApi] = await Promise.all([
+        import(`${gstatic}/firebase-app.js`), import(`${gstatic}/firebase-auth.js`), import(`${gstatic}/firebase-firestore.js`)
+      ]);
+      const name = `practice-room-${firebase.appId}`;
+      const previous = appApi.getApps().find(app => app.name === name);
+      if (previous && JSON.stringify(previous.options) !== signature) await appApi.deleteApp(previous);
+      const app = appApi.getApps().find(candidate => candidate.name === name) || appApi.initializeApp(firebase, name);
+      const auth = authApi.getAuth(app);
+      await auth.authStateReady();
+      const user = auth.currentUser || (await authApi.signInAnonymously(auth)).user;
+      const ref = dbApi.doc(dbApi.getFirestore(app), 'practiceRoomBackups', user.uid);
+      return cloudConnection = {signature, ref, dbApi};
+    }
+    async function cloudProject(restore) {
+      if (!config.firebase || hotRequest || cloudBusy || $('settings-form').querySelector('[type="submit"]').disabled) return;
+      if (!confirm(restore ? 'Replace the current project with your Firebase backup?' : 'Back up this project to the configured Firebase project? This replaces any earlier backup for this browser.')) return;
+      const payload = serializeProject();
+      cloudBusy = true;
+      setBusy();
+      status('settings-status', restore ? 'Reading backup…' : 'Saving backup…');
+      try {
+        const {ref, dbApi} = await cloud();
+        if (restore) {
+          const snapshot = await dbApi.getDoc(ref);
+          if (!snapshot.exists()) throw new Error('No Firebase backup exists for this browser.');
+          loadProjectText(snapshot.data().project);
+          status('settings-status', 'Firebase backup restored.');
+        } else {
+          if (new Blob([payload]).size > 950000) throw new Error('Project is too large for a Firebase backup. Export a JSON file instead.');
+          await dbApi.setDoc(ref, {project:payload, updatedAt:dbApi.serverTimestamp()});
+          status('settings-status', 'Project backed up to Firebase.');
+        }
+      } catch (error) { status('settings-status', `Firebase: ${error.message || 'Backup unavailable.'} Local projects are unaffected.`, true); }
+      finally { cloudBusy = false; setBusy(); }
+    }
+    function serializeProject() { return JSON.stringify({version:1, ...project}, null, 2); }
+    function exportProject() {
+      const url = URL.createObjectURL(new Blob([serializeProject()], {type:'application/json'}));
+      const link = element('a');
+      link.href = url;
+      link.download = `${project.title.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '') || 'piano-project'}.json`;
+      document.body.append(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 10000);
+      status('project-status', 'Project JSON exported.');
+    }
+    function loadProjectText(content) {
+      let data;
+      try { data = JSON.parse(content); } catch { throw new Error('This is not a valid JSON project file.'); }
+      if (data?.version !== undefined && data.version !== 1) throw new Error('This project file version is not supported.');
+      const next = projectData(data);
+      verifyScore(next.current_abc);
+      for (const option of next.alternatives) verifyScore(option.abc);
+      commit(next);
+      $('edit').value = '';
+      status('request-status');
+    }
+    async function importProject(event) {
+      const [file] = event.target.files;
+      event.target.value = '';
+      if (!file || hotRequest || cloudBusy) return;
+      try {
+        if (file.size > MAX_FILE_BYTES) throw new Error('Project file is too large (limit: 1 MiB).');
+        const content = await file.text();
+        if (hotRequest || cloudBusy) throw new Error('Wait for the current request and try loading again.');
+        loadProjectText(content);
+        status('project-status', `Loaded ${project.title}.`);
+      } catch (error) { status('project-status', `Could not load project: ${error.message}`, true); }
+    }
+
+    const VOICE_HINT = 'jazz harmony, tritone substitution, ii-V-I, Rhapsody in Blue, borrowed minor, chord voicing, diminished, Lydian, secondary dominant';
+    const Recognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    let voice = null;
+    let press = null;
+    let ignoreClick = false;
+    function micUI(label, active = false) {
+      $('mic-label').textContent = label;
+      $('mic').setAttribute('aria-pressed', String(active));
+      $('mic').dataset.active = String(active);
+    }
+    function finishVoice(job, message, error = false) {
+      if (voice !== job) return;
+      clearTimeout(job.timer);
+      job.stream?.getTracks().forEach(track => track.stop());
+      voice = null;
+      micUI('Hold / Tap to Speak');
+      status('voice-status', message, error);
+    }
+    function insertTranscript(job, transcript) {
+      const words = typeof transcript === 'string' ? transcript.trim() : '';
+      if (!words) { finishVoice(job, 'No speech detected. Try again.', true); return; }
+      const field = $(job.target);
+      if (field.readOnly) { finishVoice(job, 'Wait for the current arrangement before dictating into the song field.', true); return; }
+      field.value = [field.value.trim(), words].filter(Boolean).join(' ').slice(0, field.maxLength);
+      finishVoice(job, `Added to ${job.target === 'song' ? 'Song or phrase' : 'Custom follow-up'}. Review it before submitting.`);
+    }
+    function browserRecognition(job, cause = '') {
+      if (!Recognition) { finishVoice(job, `${cause ? `${cause} ` : ''}Browser speech recognition is unavailable. Type your prompt instead.`, true); return; }
+      const recognition = job.recognition = new Recognition();
+      recognition.lang = 'en-US';
+      recognition.interimResults = false;
+      recognition.continuous = false;
+      let transcript = '';
+      recognition.onresult = event => { transcript = [...event.results].map(result => result[0].transcript).join(' '); };
+      recognition.onerror = event => finishVoice(job, `Browser dictation: ${event.error}. Check microphone permission or type your prompt.`, true);
+      recognition.onend = () => { if (voice === job) insertTranscript(job, transcript); };
+      try {
+        recognition.start();
+        job.phase = 'recording';
+        job.timer = setTimeout(() => stopVoice(job), 45000);
+        micUI('Listening… Stop', true);
+        status('voice-status', cause ? `${cause} Using browser dictation; speak again.` : 'Using browser dictation. Speak now.');
+      } catch { finishVoice(job, 'Browser dictation could not start. Type your prompt or try again.', true); }
+    }
+    function base64Audio(blob) {
+      return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result.split(',')[1]);
+        reader.onerror = () => reject(new Error('The recording could not be read.'));
+        reader.readAsDataURL(blob);
+      });
+    }
+    async function transcribe(job, chunks) {
+      job.stream?.getTracks().forEach(track => track.stop());
+      if (voice !== job) return;
+      if (job.failed) { finishVoice(job, 'Microphone recording failed. Try again or type your prompt.', true); return; }
+      const mime = job.recorder.mimeType || chunks[0]?.type || 'audio/webm';
+      const blob = new Blob(chunks, {type:mime});
+      if (!blob.size) { finishVoice(job, 'Nothing was recorded. Hold longer or tap to start.', true); return; }
+      const format = /mp4|m4a/i.test(mime) ? 'm4a' : /ogg/i.test(mime) ? 'ogg' : /wav/i.test(mime) ? 'wav' : /mpeg|mp3/i.test(mime) ? 'mp3' : /aac/i.test(mime) ? 'aac' : 'webm';
+      job.phase = 'sending';
+      micUI('Transcribing…');
+      status('voice-status', 'Sending the recording to OpenRouter Whisper…');
+      try {
+        const result = await router('/audio/transcriptions', {model:'openai/whisper-large-v3', language:'en',
+          prompt:VOICE_HINT, input_audio:{data:await base64Audio(blob), format}}, job.key, 45000);
+        if (voice === job) insertTranscript(job, result.text);
+      } catch (error) {
+        if (voice === job) browserRecognition(job, `Whisper transcription failed. ${error.message}`);
+      }
+    }
+    async function startVoice() {
+      if (voice) return;
+      stopSpeech();
+      if (synth) stopAudio();
+      const job = voice = {phase:'starting', target:$('voice-target').value, key:config.key, stopOnReady:false};
+      if (!job.key || !window.MediaRecorder || !navigator.mediaDevices?.getUserMedia) {
+        browserRecognition(job, job.key ? 'Recording is unavailable on this browser or connection.' : 'No OpenRouter key is set.');
+        return;
+      }
+      micUI('Opening microphone…', true);
+      status('voice-status', 'Allow microphone access if prompted.');
+      try {
+        job.stream = await navigator.mediaDevices.getUserMedia({audio:true});
+        if (voice !== job || job.stopOnReady) { finishVoice(job, 'Recording cancelled. Tap again when ready.'); return; }
+        const mimeType = ['audio/webm;codecs=opus','audio/mp4','audio/ogg;codecs=opus'].find(type => MediaRecorder.isTypeSupported?.(type));
+        const recorder = job.recorder = new MediaRecorder(job.stream, mimeType ? {mimeType} : undefined);
+        const chunks = [];
+        recorder.ondataavailable = event => { if (event.data.size) chunks.push(event.data); };
+        recorder.onerror = () => { job.failed = true; if (voice === job) stopVoice(job); };
+        recorder.onstop = () => transcribe(job, chunks);
+        recorder.start();
+        job.phase = 'recording';
+        job.timer = setTimeout(() => stopVoice(job), 45000);
+        micUI('Listening… Stop', true);
+        status('voice-status', 'Recording. Release after a hold, or tap again to transcribe.');
+      } catch (error) {
+        if (voice !== job) return;
+        job.stream?.getTracks().forEach(track => track.stop());
+        if (job.stopOnReady) finishVoice(job, 'Recording cancelled.');
+        else if (error.name === 'NotAllowedError') finishVoice(job, 'Microphone permission was denied. Allow access in your browser, or type your prompt.', true);
+        else browserRecognition(job, 'Could not open the recorder.');
+      }
+    }
+    function stopVoice(job) {
+      if (job.phase === 'starting') { job.stopOnReady = true; return; }
+      if (job.phase !== 'recording') return;
+      job.phase = 'finishing';
+      clearTimeout(job.timer);
+      micUI('Finishing…');
+      if (job.recognition) {
+        try { job.recognition.stop(); } catch { finishVoice(job, 'Browser dictation stopped.', true); }
+      } else if (job.recorder.state !== 'inactive') job.recorder.stop();
+    }
+
+    $('directions').append(...DIRECTIONS.map(direction => {
+      const button = element('button', 'btn direction request', direction);
+      button.type = 'button';
+      const arrow = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      arrow.setAttribute('class', 'icon');
+      arrow.setAttribute('aria-hidden', 'true');
+      const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
+      use.setAttribute('href', '#i-arrow');
+      arrow.append(use);
+      button.append(arrow);
+      button.addEventListener('click', () => arrange('direction', direction));
+      return button;
+    }));
+    $('song-form').addEventListener('submit', event => { event.preventDefault(); arrange('new'); });
+    $('edit-form').addEventListener('submit', event => { event.preventDefault(); arrange('edit', $('edit').value.trim()); });
+    $('score-title').tabIndex = -1;
+    $('play').addEventListener('click', play);
+    $('stop').addEventListener('click', () => stopAudio('Playback stopped.'));
+    $('tempo').addEventListener('input', () => {
+      project = {...project, tempo:Number($('tempo').value)};
+      paintTempo();
+      if (synth) stopAudio('Tempo changed. Tap Play to restart.');
+    });
+    $('tempo').addEventListener('change', saveProject);
+    $('read-aloud').addEventListener('change', () => $('read-aloud').checked ? readExplanation() : stopSpeech());
+    $('settings-open').addEventListener('click', () => showSettings());
+    $('settings-close').addEventListener('click', () => $('settings').close());
+    $('settings').addEventListener('click', event => { if (event.target === $('settings')) $('settings').close(); });
+    $('settings-form').addEventListener('submit', saveSettings);
+    $('cloud-save').addEventListener('click', () => cloudProject(false));
+    $('cloud-load').addEventListener('click', () => cloudProject(true));
+    $('export').addEventListener('click', exportProject);
+    $('load').addEventListener('click', () => $('project-file').click());
+    $('project-file').addEventListener('change', importProject);
+    $('mic').addEventListener('contextmenu', event => event.preventDefault());
+    $('mic').addEventListener('pointerdown', event => {
+      if (event.button !== 0 || !event.isPrimary) return;
+      ignoreClick = false;
+      if (voice) return;
+      $('mic').setPointerCapture(event.pointerId);
+      press = {id:event.pointerId, at:performance.now()};
+      startVoice();
+    });
+    function releaseMic(event) {
+      if (press?.id !== event.pointerId) return;
+      const held = performance.now() - press.at >= 350;
+      if (voice && (held || (event.type === 'pointercancel' && voice.phase === 'recording'))) stopVoice(voice);
+      press = null;
+      ignoreClick = event.type === 'pointerup';
+    }
+    $('mic').addEventListener('pointerup', releaseMic);
+    $('mic').addEventListener('pointercancel', releaseMic);
+    $('mic').addEventListener('click', event => {
+      if (ignoreClick && event.detail) { ignoreClick = false; return; }
+      if (voice) stopVoice(voice); else startVoice();
+    });
+    window.addEventListener('DOMContentLoaded', () => {
+      paintProject();
+      if ('ResizeObserver' in window) {
+        let frame;
+        const observer = new ResizeObserver(() => {
+          if (Math.abs($('notation').clientWidth - renderWidth) < 3) return;
+          cancelAnimationFrame(frame);
+          frame = requestAnimationFrame(() => {
+            paintScore();
+            project.alternatives.forEach((alt, i) => {
+              const preview = $(`preview-${i}`);
+              if (preview && !preview.hidden) drawPreview(preview, alt.abc);
+            });
+          });
+        });
+        observer.observe($('notation'));
+      }
+    });
+  </script>
+</body>
+</html>
