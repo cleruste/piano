@@ -16,6 +16,9 @@
     .score-head,.theory-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:12px}.score-head{padding:18px clamp(14px,2.2vw,24px)}.score-title{font-family:Georgia,serif;font-weight:500;font-size:clamp(1.5rem,3vw,2.05rem);letter-spacing:-.035em;line-height:1.15;margin-block:4px;overflow-wrap:anywhere}.transport{display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:10px clamp(14px,2.2vw,24px);background:#faf9fe;border-block:1px solid var(--line)}.transport .status{flex:1 1 100%;margin:0}.tempo{display:flex;min-height:44px;align-items:center;gap:9px;margin-inline-start:auto;font-size:.82rem;color:var(--muted);font-weight:750}.tempo input{width:clamp(82px,14vw,155px);accent-color:var(--accent);margin:0;min-height:44px}.tempo output{min-width:4.4em;color:var(--accent-dark);font-variant-numeric:tabular-nums}.paper{padding:12px clamp(8px,1.6vw,22px) 15px;background:#fff;border-radius:0 0 var(--radius) var(--radius);color:#161424}.notation{width:100%;min-width:0;min-height:104px}.notation svg{display:block}.score-note{padding:4px 8px}.score-empty{padding:15px;white-space:pre-wrap;overflow-wrap:anywhere;font-size:.9rem}.theory-head{margin-bottom:13px}.switch{display:inline-flex;gap:7px;align-items:center;min-height:44px;color:var(--accent-dark);font-size:.83rem;font-weight:750;cursor:pointer}.switch input{width:19px;height:19px;accent-color:var(--accent);margin:0}.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(215px,100%),1fr));gap:10px}.theory-card,.variant{border:1px solid var(--line);border-radius:12px;background:#fafafe;padding:13px;overflow-wrap:anywhere}.theory-card h3,.variant h3{margin-block:6px 3px;font-size:1rem}.theory-card p,.variant p{color:var(--muted);font-size:.88rem}.variant .row{margin-top:10px}.variant .notation{padding-top:9px}.variant .pill{white-space:normal}.history{margin-top:2px}.history summary{display:flex;align-items:center;gap:9px;min-height:44px;font-weight:750;color:var(--accent-dark)}.history ol{margin:0;padding-left:23px;overflow-wrap:anywhere}.history li{padding:4px 0;color:var(--muted)}.history li strong{color:var(--ink)}.footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding-block:20px 30px;color:var(--muted);font-size:.78rem}
     dialog{width:min(560px,calc(100% - 28px));max-height:calc(100% - 28px);border:1px solid var(--line);border-radius:var(--radius);color:var(--ink);padding:22px;box-shadow:0 18px 80px #20174444}dialog::backdrop{background:#19132c8a}dialog form{display:grid;gap:12px}dialog h2{font-size:1.3rem}dialog .settings-head{display:flex;justify-content:space-between;align-items:center;gap:10px}dialog .cloud-setup{border:1px solid var(--line);border-radius:10px;padding:0 10px 5px}dialog summary{padding-block:10px}dialog pre{overflow:auto;background:var(--bg);padding:9px;border-radius:6px;font-size:.72rem}.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
     .mobile-jump{display:none;text-decoration:none;margin-top:12px}.theory-card .pill{white-space:normal}.project-feedback .status:not(:empty){margin-top:8px}.variant-notes{margin:8px 0 0;padding-left:18px;color:var(--muted);font-size:.83rem}.variant-notes li{padding:2px 0}.variant-notes strong{color:var(--ink)}
+    .attach-row{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin-top:10px}.attach-chip{display:inline-flex;align-items:center;gap:6px;background:var(--tint);color:var(--accent-dark);border-radius:8px;padding:4px 9px;font-size:.78rem;font-weight:700;max-width:100%}.attach-chip span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.attach-chip button{border:none;background:none;padding:2px 4px;font-weight:800;color:var(--accent-dark);min-height:28px}.web-opt{margin-top:8px}
+    .page-nav{display:flex;align-items:center;flex-wrap:wrap;gap:6px;padding:8px clamp(14px,2.2vw,24px);background:#fff;border-bottom:1px solid var(--line)}.page-nav .btn{min-height:38px;padding:6px 11px;font-size:.82rem}.page-label{font-size:.83rem;font-weight:750;color:var(--accent-dark);min-width:6.5em;text-align:center;font-variant-numeric:tabular-nums}.page-nav .switch{margin-inline-start:auto;min-height:38px}
+    .exchange summary{display:flex;align-items:center;gap:9px;min-height:44px;font-weight:750;color:var(--accent-dark)}.exchange-body{display:grid;gap:12px;margin-top:10px}.exchange-meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center}.exchange-block{display:grid;gap:4px}.exchange-block strong{font-size:.8rem;color:var(--accent-dark);text-transform:uppercase;letter-spacing:.08em}.exchange-block pre{margin:0;max-height:240px;overflow:auto;background:#f7f7fc;border:1px solid var(--line);border-radius:10px;padding:10px;font-size:.76rem;line-height:1.4;white-space:pre-wrap;overflow-wrap:anywhere}.citations{margin:0;padding-left:18px;font-size:.82rem}.citations li{padding:2px 0}
     @media(max-width:760px){.layout{grid-template-columns:1fr}.workbench{grid-row:1}.rail{grid-row:2}.directions{grid-template-columns:repeat(2,minmax(0,1fr))}.intro{align-items:start}.intro>.pill{display:none}.mobile-jump{display:inline-flex}}
     @media(max-width:470px){.branding-caption,.top-actions .icon{display:none}.topbar .frame{align-items:flex-start;flex-direction:column;gap:7px}.top-actions{width:100%;gap:6px}.top-actions .btn{flex:1;padding-inline:6px;white-space:nowrap;font-size:.78rem}.intro{padding-block:20px 16px}.layout,.stack{gap:13px}.score-head .pill{display:none}.tempo{margin-inline-start:0}.directions{grid-template-columns:1fr}}
   </style>
@@ -60,6 +63,12 @@
             <label class="field" for="song">Song or phrase
               <textarea id="song" maxlength="2500" rows="3" placeholder="e.g. Rhapsody in Blue — Andantino slow theme in E major"></textarea>
             </label>
+            <div class="attach-row">
+              <button class="btn" id="attach-btn" type="button"><svg class="icon" aria-hidden="true"><use href="#i-folder"/></svg>Attach score / chords</button>
+              <input id="attach-file" type="file" accept=".pdf,.png,.jpg,.jpeg,.webp,.txt,.abc,.cho,.chordpro,.md,.xml,.musicxml" hidden>
+              <span class="attach-chip" id="attach-chip" hidden><span id="attach-name"></span><button type="button" id="attach-clear" aria-label="Remove attachment">✕</button></span>
+            </div>
+            <label class="switch web-opt" for="web-search"><input type="checkbox" id="web-search" checked> Look up chords online (web search)</label>
             <button class="btn primary full request" type="submit"><svg class="icon" aria-hidden="true"><use href="#i-spark"/></svg>Generate Score</button>
           </form>
           <div class="follow" aria-labelledby="directions-title">
@@ -90,6 +99,12 @@
             <label class="tempo" for="tempo">Tempo <input id="tempo" type="range" min="40" max="180" value="84" step="1"> <output id="tempo-value" for="tempo">84 BPM</output></label>
             <p class="small status" id="audio-status" role="status"></p>
           </div>
+          <div class="page-nav" id="page-nav" aria-label="Score pages" hidden>
+            <button class="btn" type="button" id="prev-page">Prev Page</button>
+            <span class="page-label" id="page-label">Page 1 / 1</span>
+            <button class="btn" type="button" id="next-page">Next Page</button>
+            <label class="switch" for="page-mode"><input type="checkbox" id="page-mode" checked> Page view</label>
+          </div>
           <div class="paper"><div id="notation" class="notation" aria-label="Piano sheet music"></div><p class="small status score-note" id="score-status" role="status"></p></div>
         </section>
         <section class="panel pad" aria-labelledby="theory-title">
@@ -102,6 +117,16 @@
           <div class="cards" id="alternatives"></div>
         </section>
         <details class="panel pad history"><summary>Project history</summary><ol id="history"></ol><p class="small" id="history-empty">Follow-up edits will appear here.</p></details>
+        <details class="panel pad exchange" id="exchange-panel">
+          <summary>LLM Exchange</summary>
+          <p class="small" id="exchange-empty">Generate or edit a score to inspect the request, web sources, and raw model response.</p>
+          <div class="exchange-body" id="exchange-body" hidden>
+            <div class="exchange-meta" id="exchange-meta"></div>
+            <div class="exchange-block" id="exchange-citations-wrap" hidden><strong>Web sources</strong><ul class="citations" id="exchange-citations"></ul></div>
+            <div class="exchange-block"><strong>Request sent</strong><pre id="exchange-request"></pre></div>
+            <div class="exchange-block"><strong>Raw model response</strong><pre id="exchange-response"></pre></div>
+          </div>
+        </details>
       </div>
     </div>
     <footer class="footer"><span>Practice Room · Made for the music stand</span><span>Projects stay in this browser unless exported or backed up.</span></footer>
@@ -167,7 +192,7 @@ w: I6 * * * | iv(add6) * * * | V7 * * * | Imaj7 * * |
     };
     const SYSTEM_PROMPT = `You are a piano arranger and practical music-theory tutor. Return exactly one strict JSON object, no Markdown or code fences:
 {"title":"…","abc":"…","changes":[{"measure":"2–3","chord":"A7 → Dm7","technique":"Secondary dominant","explanation":"…"}],"alternatives":[{"title":"…","abc":"…","changes":[{"measure":"…","chord":"…","technique":"…","explanation":"…"}]}]}
-Make a short playable piano approximation/study (normally 4 to 8 measures), not a claimed authoritative transcription. For an edit, keep the existing melody, key, rhythm, and bar numbering unless told otherwise. If asked for two alternatives, keep the base arrangement as the main score and return exactly two complete, distinct, playable arrangements of the same passage in alternatives, each with its own theory notes. Otherwise return alternatives: [] unless requested.
+Make a playable piano arrangement (typically 8 to 24 measures, or longer if needed for a full section/song, spanning multiple systems/pages cleanly), not a claimed authoritative transcription. If a document, image, or chord sheet is attached, or if web search results are provided, use them as the harmonic and melodic basis. For an edit, keep the existing melody, key, rhythm, and bar numbering unless told otherwise. If asked for two alternatives, keep the base arrangement as the main score and return exactly two complete, distinct, playable arrangements of the same passage in alternatives, each with its own theory notes. Otherwise return alternatives: [] unless requested.
 Target Grade 6/7 sight-reading: melody in the right hand, simple bass and compact shell voicings in the left, no stretches wider than an octave, and manageable rhythms. For each arrangement produce one valid ABC tune: headers X:, T:, M:, L:, Q: (quarter-note tempo), %%score { RH LH }, V:RH clef=treble, V:LH clef=bass, then K:. Use [V:RH] and [V:LH] blocks of the same bar count and exact durations. Put quoted chord symbols on the right-hand notes. Immediately after each RH music line place a w: line with concise Roman-numeral harmony labels aligned to the first note of each chord; use * for remaining note slots and | to advance to the next bar. Use 2 to 4 bars per music line. Check duration, octave/register, accidentals and chord-tone spelling. Avoid any directives other than %%score. In changes, identify actual measures and chords and explain where the notes move and what to listen for or try, in one or two short sentences per change.`;
 
     function stored(key) {
@@ -261,6 +286,10 @@ Target Grade 6/7 sight-reading: melody in the right hand, simple bass and compac
     let renderWidth = 0;
     let utterance = null;
     let cloudConnection = null;
+    let pageIndex = 0;
+    let totalPages = 1;
+    let attachment = null;
+    let exchange = null;
 
     function saveProject() {
       if (!persist(PROJECT_KEY, project)) status('project-status', 'Browser storage is unavailable or full. Export the project to keep a copy.', true);
@@ -284,11 +313,29 @@ Target Grade 6/7 sight-reading: melody in the right hand, simple bass and compac
         if (!visual || !node.querySelector('svg')) throw new Error('This score could not be rendered.');
         const warnings = visual.warnings?.length || 0;
         status('score-status', warnings ? `ABC contains ${warnings} notation ${warnings === 1 ? 'warning' : 'warnings'}. Check the score before practicing.` : '', warnings > 0);
+        paginateScore();
       } catch (error) {
         node.replaceChildren(element('pre', 'score-empty', project.current_abc));
         status('score-status', error.message, true);
+        $('page-nav').hidden = true;
       }
       $('play').disabled = !visual || Boolean(synth);
+    }
+    function paginateScore() {
+      const svg = $('notation').querySelector('svg');
+      const systems = svg ? [...svg.querySelectorAll('.abcjs-staff-wrapper')] : [];
+      const perPage = 2;
+      totalPages = Math.max(1, Math.ceil(systems.length / perPage));
+      pageIndex = Math.max(0, Math.min(pageIndex, totalPages - 1));
+      $('page-nav').hidden = totalPages <= 1;
+      const paged = $('page-mode').checked && totalPages > 1;
+      systems.forEach((sys, idx) => {
+        const show = !paged || (idx >= pageIndex * perPage && idx < (pageIndex + 1) * perPage);
+        sys.style.display = show ? '' : 'none';
+      });
+      $('page-label').textContent = paged ? `Page ${pageIndex + 1} / ${totalPages}` : `All (${systems.length} systems)`;
+      $('prev-page').disabled = !paged || pageIndex <= 0;
+      $('next-page').disabled = !paged || pageIndex >= totalPages - 1;
     }
     function paintChanges() {
       const list = project.changes.map(change => {
@@ -369,6 +416,7 @@ Target Grade 6/7 sight-reading: melody in the right hand, simple bass and compac
     function commit(next) {
       stopAudio();
       stopSpeech();
+      pageIndex = 0;
       project = next;
       example = next.current_abc.trim() === DEMO.current_abc.trim();
       paintProject();
@@ -454,6 +502,64 @@ Target Grade 6/7 sight-reading: melody in the right hand, simple bass and compac
       $('song').readOnly = locked;
       $('settings-status').setAttribute('aria-busy', String(cloudBusy));
     }
+    function paintAttachment() {
+      $('attach-chip').hidden = !attachment;
+      if (attachment) $('attach-name').textContent = `${attachment.name} (${Math.max(1, Math.round(attachment.size / 1024))} KB)`;
+    }
+    async function readAttachment(event) {
+      const [file] = event.target.files;
+      event.target.value = '';
+      if (!file) return;
+      if (file.size > 4 * 1024 * 1024) { status('request-status', 'Attachment is too large (limit: 4 MiB).', true); return; }
+      const ext = file.name.split('.').pop()?.toLowerCase() || '';
+      try {
+        if (file.type === 'application/pdf' || ext === 'pdf') {
+          const dataUrl = await new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = () => reject(new Error('Could not read PDF file.'));
+            reader.readAsDataURL(file);
+          });
+          attachment = {name:file.name, size:file.size, kind:'pdf', mime:'application/pdf', dataUrl};
+        } else if (file.type.startsWith('image/') || ['png','jpg','jpeg','webp'].includes(ext)) {
+          const dataUrl = await new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = () => reject(new Error('Could not read image file.'));
+            reader.readAsDataURL(file);
+          });
+          attachment = {name:file.name, size:file.size, kind:'image', mime:file.type || `image/${ext}`, dataUrl};
+        } else {
+          const content = (await file.text()).slice(0, 24000);
+          attachment = {name:file.name, size:file.size, kind:'text', text:content};
+        }
+        paintAttachment();
+        status('request-status', `Attached ${file.name}.`);
+      } catch (error) { status('request-status', error.message, true); }
+    }
+    function paintExchange() {
+      $('exchange-empty').hidden = Boolean(exchange);
+      $('exchange-body').hidden = !exchange;
+      if (!exchange) return;
+      const meta = [element('span', 'pill', exchange.model)];
+      if (exchange.webSearch) meta.push(element('span', 'pill', 'Web search on'));
+      if (exchange.attachmentName) meta.push(element('span', 'pill', `File: ${exchange.attachmentName}`));
+      if (exchange.usage) meta.push(element('span', 'small', `${exchange.usage.total_tokens ?? '?'} tokens`));
+      $('exchange-meta').replaceChildren(...meta);
+      const citations = exchange.citations || [];
+      $('exchange-citations-wrap').hidden = !citations.length;
+      $('exchange-citations').replaceChildren(...citations.map(c => {
+        const li = element('li');
+        const link = element('a', '', c.title || c.url);
+        link.href = c.url;
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        li.append(link);
+        return li;
+      }));
+      $('exchange-request').textContent = exchange.requestSummary;
+      $('exchange-response').textContent = exchange.rawResponse || exchange.error || '';
+    }
     function parseModelJSON(raw) {
       const cleaned = raw.trim().replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '');
       try { return JSON.parse(cleaned); }
@@ -494,20 +600,37 @@ Target Grade 6/7 sight-reading: melody in the right hand, simple bass and compac
       if (!isNew && !direction) { status('request-status', 'Enter a follow-up instruction first.', true); $('edit').focus(); return; }
       const {key, model} = config;
       if (!key) { showSettings('Add your OpenRouter API key to generate or edit a score.'); return; }
+      const webSearch = $('web-search').checked;
+      const attached = attachment;
       const base = project;
       hotRequest = true;
       setBusy();
       status('request-status', isNew ? 'Arranging your piano score…' : 'Working through the harmony…');
+      const userPayload = isNew ? {song, instruction:direction || 'Create the initial score.'} : {
+        song:base.song || base.title, instruction:direction,
+        current:{title:base.title, abc:base.current_abc, changes:base.changes}, history:base.history.slice(-8)
+      };
+      if (attached?.kind === 'text') userPayload.attached_document = {filename:attached.name, content:attached.text};
+      const userText = JSON.stringify(userPayload);
+      const userContent = attached?.kind === 'pdf'
+        ? [{type:'text', text:userText}, {type:'file', file:{filename:attached.name, file_data:attached.dataUrl}}]
+        : attached?.kind === 'image'
+          ? [{type:'text', text:userText}, {type:'image_url', image_url:{url:attached.dataUrl}}]
+          : userText;
+      exchange = {model, webSearch, attachmentName:attached?.name || '', requestSummary:JSON.stringify(userPayload, null, 2), rawResponse:'', citations:[], usage:null, error:''};
+      paintExchange();
       try {
-        const user = isNew ? {song, instruction:direction || 'Create the initial score.'} : {
-          song:base.song || base.title, instruction:direction,
-          current:{title:base.title, abc:base.current_abc, changes:base.changes}, history:base.history.slice(-8)
-        };
-        const response = await router('/chat/completions', {
+        const body = {
           model, response_format:{type:'json_object'},
-          messages:[{role:'system', content:SYSTEM_PROMPT}, {role:'user', content:JSON.stringify(user)}]
-        }, key, 120000);
+          messages:[{role:'system', content:SYSTEM_PROMPT}, {role:'user', content:userContent}]
+        };
+        if (webSearch) body.plugins = [{id:'web', max_results:3}];
+        const response = await router('/chat/completions', body, key, 120000);
         const choice = response.choices?.[0];
+        exchange.usage = response.usage || null;
+        exchange.citations = (choice?.message?.annotations || []).filter(a => a?.type === 'url_citation' && a.url_citation?.url).map(a => a.url_citation);
+        exchange.rawResponse = typeof choice?.message?.content === 'string' ? choice.message.content : JSON.stringify(response, null, 2);
+        paintExchange();
         if (choice?.finish_reason === 'length') throw new Error('The response was cut short. Ask for fewer bars and retry.');
         if (typeof choice?.message?.content !== 'string') throw new Error('The model returned no arrangement. Try a different model or prompt.');
         let data;
@@ -526,7 +649,10 @@ Target Grade 6/7 sight-reading: melody in the right hand, simple bass and compac
         if (mode === 'edit' && $('edit').value.trim() === direction) $('edit').value = '';
         status('request-status', options.length ? 'Alternative scores are ready to compare.' : 'Score and harmony notes are ready.');
         $('score-title').scrollIntoView({block:'start'});
-      } catch (error) { status('request-status', error.message || 'Could not arrange the score.', true); }
+      } catch (error) {
+        if (exchange) { exchange.error = error.message || 'Could not arrange the score.'; paintExchange(); }
+        status('request-status', error.message || 'Could not arrange the score.', true);
+      }
       finally { hotRequest = false; setBusy(); }
     }
 
@@ -796,6 +922,17 @@ Target Grade 6/7 sight-reading: melody in the right hand, simple bass and compac
     $('export').addEventListener('click', exportProject);
     $('load').addEventListener('click', () => $('project-file').click());
     $('project-file').addEventListener('change', importProject);
+    $('attach-btn').addEventListener('click', () => $('attach-file').click());
+    $('attach-file').addEventListener('change', readAttachment);
+    $('attach-clear').addEventListener('click', () => { attachment = null; paintAttachment(); status('request-status'); });
+    $('prev-page').addEventListener('click', () => { if (pageIndex > 0) { pageIndex--; paginateScore(); } });
+    $('next-page').addEventListener('click', () => { if (pageIndex < totalPages - 1) { pageIndex++; paginateScore(); } });
+    $('page-mode').addEventListener('change', paginateScore);
+    document.addEventListener('keydown', event => {
+      if ($('page-nav').hidden || !$('page-mode').checked || /^(INPUT|TEXTAREA|SELECT)$/.test(document.activeElement?.tagName)) return;
+      if (event.key === 'ArrowLeft' && pageIndex > 0) { pageIndex--; paginateScore(); }
+      if (event.key === 'ArrowRight' && pageIndex < totalPages - 1) { pageIndex++; paginateScore(); }
+    });
     $('mic').addEventListener('contextmenu', event => event.preventDefault());
     $('mic').addEventListener('pointerdown', event => {
       if (event.button !== 0 || !event.isPrimary) return;
