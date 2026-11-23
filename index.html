@@ -191,9 +191,12 @@ w: I6 * * * | iv(add6) * * * | V7 * * * | Imaj7 * * |
       ], alternatives: [], history: [], song: '', tempo: 84
     };
     const SYSTEM_PROMPT = `You are a piano arranger and practical music-theory tutor. Return exactly one strict JSON object, no Markdown or code fences:
-{"title":"…","abc":"…","changes":[{"measure":"2–3","chord":"A7 → Dm7","technique":"Secondary dominant","explanation":"…"}],"alternatives":[{"title":"…","abc":"…","changes":[{"measure":"…","chord":"…","technique":"…","explanation":"…"}]}]}
-Make a playable piano arrangement (typically 8 to 24 measures, or longer if needed for a full section/song, spanning multiple systems/pages cleanly), not a claimed authoritative transcription. If a document, image, or chord sheet is attached, or if web search results are provided, use them as the harmonic and melodic basis. For an edit, keep the existing melody, key, rhythm, and bar numbering unless told otherwise. If asked for two alternatives, keep the base arrangement as the main score and return exactly two complete, distinct, playable arrangements of the same passage in alternatives, each with its own theory notes. Otherwise return alternatives: [] unless requested.
-Target Grade 6/7 sight-reading: melody in the right hand, simple bass and compact shell voicings in the left, no stretches wider than an octave, and manageable rhythms. For each arrangement produce one valid ABC tune: headers X:, T:, M:, L:, Q: (quarter-note tempo), %%score { RH LH }, V:RH clef=treble, V:LH clef=bass, then K:. Use [V:RH] and [V:LH] blocks of the same bar count and exact durations. Put quoted chord symbols on the right-hand notes. Immediately after each RH music line place a w: line with concise Roman-numeral harmony labels aligned to the first note of each chord; use * for remaining note slots and | to advance to the next bar. Use 2 to 4 bars per music line. Check duration, octave/register, accidentals and chord-tone spelling. Avoid any directives other than %%score. In changes, identify actual measures and chords and explain where the notes move and what to listen for or try, in one or two short sentences per change.`;
+{"title":"…","reference_summary":{"key_and_meter":"G minor, 4/4","section_scope":"Chorus, 8 bars","chord_anchor":"Gm – Eb – Bb – F","fidelity_note":"…"},"abc":"…","changes":[{"measure":"2–3","chord":"A7 → Dm7","technique":"Secondary dominant","explanation":"…"}],"alternatives":[{"title":"…","abc":"…","changes":[{"measure":"…","chord":"…","technique":"…","explanation":"…"}]}]}
+Brief first: Before writing the score, provide all four non-empty reference_summary strings: key_and_meter gives the arrangement's key and meter; section_scope identifies the requested section and bar count; chord_anchor summarizes the harmonic progression used as a reference; fidelity_note distinguishes an exact score from an approximation based on memory or search and specifies what is uncertain. For a known song, first identify the specific recording or version and requested section, its real key, meter, tempo feel, section structure, and authentic chord progression. Use the attached document and relevant web results as evidence when available; distinguish evidence for chords from evidence for melody. Do not invent sources or claim a transcription is verified when it is not. Where any melody, chords, key, meter, or section is inferred or approximated from memory rather than verified, explicitly say what is uncertain in fidelity_note and in a concise changes entry for the relevant measures. If sources conflict, identify the uncertainty rather than guessing with confidence. User-supplied notes, chord patterns, and explicit requests for a different key take precedence.
+For a known song with a distinctive vocal or hook melody (such as France Gall's Résiste), make V:RH follow the recognizable melodic contour, rhythmic accents, pickups and phrase lengths of the requested section rather than generic scales or arpeggios. Preserve characteristic melody notes and rhythm where known, simplifying only as needed for Grade 6/7 sight-reading. When the melody cannot be verified, give the best clearly labeled approximation, not a fabricated claim of accuracy. Make a playable piano arrangement (typically 8 to 24 measures, or longer if needed for a full section/song, spanning multiple systems/pages cleanly). If a document, image, or chord sheet is attached, or if web search results are provided, use them as the harmonic and melodic basis where they actually support it. For an edit, keep the existing melody, key, rhythm, and bar numbering unless told otherwise. If asked for two alternatives, keep the base arrangement as the main score and return exactly two complete, distinct, playable arrangements of the same passage in alternatives, each with its own theory notes. Otherwise return alternatives: [] unless requested.
+For intermediate piano, keep V:LH steady and playable: in 4/4 use regular bass pulses, comfortable octaves, or compact two- or three-note voicings with a consistent groove rather than awkward stop-start rests. In other meters preserve the song's meter and use an equally steady, appropriate accompaniment. Keep stretches no wider than an octave and avoid unplayable jumps.
+Verify before returning JSON: Compare the reference brief, RH and LH sounding notes, chord symbols, bass inversions, Roman-numeral w: labels, and changes explanations measure by measure. Correct any contradictions; the brief is a harmonic anchor, while requested reharmonizations must be reflected consistently in every corresponding part and explanation. Check the key signature and ABC accidentals, including their duration within a bar: G/B needs B natural in the bass, not B-flat; Edim7 contains E, G, B-flat, and D-flat; D7 contains F-sharp unless an intentional alteration is named and explained. Honor slash-chord bass notes. Non-chord melody notes and chromatic passing bass notes should resolve naturally; label and explain intentional alterations or passing tones. Ensure changes refer only to the harmony and notes actually written.
+For each arrangement produce one valid ABC tune: headers X:, T:, M:, L:, Q: (quarter-note tempo), %%score { RH LH }, V:RH clef=treble, V:LH clef=bass, then K:. Use [V:RH] and [V:LH] blocks of the same bar count and exact durations. Put quoted chord symbols on the right-hand notes. Immediately after each RH music line place a w: line with concise Roman-numeral harmony labels aligned to the first note of each chord; use * for remaining note slots and | to advance to the next bar. Use 2 to 4 bars per music line. Check duration, octave/register, accidentals and chord-tone spelling. Avoid any directives other than %%score. In changes, identify actual measures and chords and explain where the written notes move and what to listen for or try, in one or two concise, accurate sentences per change.`;
 
     function stored(key) {
       try { return JSON.parse(localStorage.getItem(key)); } catch { return null; }
@@ -215,6 +218,16 @@ Target Grade 6/7 sight-reading: melody in the right hand, simple bass and compac
     function text(value, field, max) {
       if (typeof value !== 'string' || !value.trim() || value.length > max) throw new Error(`Missing or invalid ${field}.`);
       return value.trim();
+    }
+    function validateReferenceSummary(summary) {
+      if (!summary || typeof summary !== 'object' || Array.isArray(summary)) {
+        throw new Error('The model response is missing reference_summary. Try generating again.');
+      }
+      for (const field of ['key_and_meter', 'section_scope', 'chord_anchor', 'fidelity_note']) {
+        if (typeof summary[field] !== 'string' || !summary[field].trim() || summary[field].length > 1300) {
+          throw new Error(`The model response is missing or has an invalid reference_summary.${field}. Try generating again.`);
+        }
+      }
     }
     function cleanChanges(changes) {
       if (!Array.isArray(changes) || changes.length > 40) throw new Error('Invalid harmony notes.');
@@ -595,9 +608,9 @@ Target Grade 6/7 sight-reading: melody in the right hand, simple bass and compac
     async function arrange(mode, direction = '') {
       if (hotRequest || cloudBusy) return;
       const song = $('song').value.trim();
-      const isNew = mode === 'new' || (mode === 'direction' && !!song && song !== project.song);
+      const isNew = mode === 'new' || (!!song && song !== project.song.trim());
       if (isNew && !song) { status('request-status', 'Enter a song, phrase, or melody first.', true); $('song').focus(); return; }
-      if (!isNew && !direction) { status('request-status', 'Enter a follow-up instruction first.', true); $('edit').focus(); return; }
+      if (mode !== 'new' && !direction) { status('request-status', 'Enter a follow-up instruction first.', true); $('edit').focus(); return; }
       const {key, model} = config;
       if (!key) { showSettings('Add your OpenRouter API key to generate or edit a score.'); return; }
       const webSearch = $('web-search').checked;
@@ -621,7 +634,7 @@ Target Grade 6/7 sight-reading: melody in the right hand, simple bass and compac
       paintExchange();
       try {
         const body = {
-          model, response_format:{type:'json_object'},
+          model, temperature:isNew ? 0.2 : 0.5, response_format:{type:'json_object'},
           messages:[{role:'system', content:SYSTEM_PROMPT}, {role:'user', content:userContent}]
         };
         if (webSearch) body.plugins = [{id:'web', max_results:3}];
@@ -635,6 +648,8 @@ Target Grade 6/7 sight-reading: melody in the right hand, simple bass and compac
         if (typeof choice?.message?.content !== 'string') throw new Error('The model returned no arrangement. Try a different model or prompt.');
         let data;
         try { data = parseModelJSON(choice.message.content); } catch { throw new Error('The model did not return valid JSON. Try again or select a model that supports JSON mode.'); }
+        // Existing project files predate reference_summary; require it only from new model responses.
+        validateReferenceSummary(data?.reference_summary);
         const score = arrangement(data);
         const options = cleanAlternatives(data?.alternatives ?? []);
         if (direction === DIRECTIONS[1] && options.length !== 2) throw new Error('The model did not return two alternatives. Try the direction again.');
